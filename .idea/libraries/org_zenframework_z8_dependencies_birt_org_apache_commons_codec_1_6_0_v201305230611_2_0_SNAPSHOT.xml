@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="org.zenframework.z8.dependencies.birt:org.apache.commons.codec_1.6.0.v201305230611:2.0-SNAPSHOT" type="repository">
+    <properties maven-id="org.zenframework.z8.dependencies.birt:org.apache.commons.codec_1.6.0.v201305230611:2.0-SNAPSHOT" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/org.apache.commons.codec_1.6.0.v201305230611-2.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
