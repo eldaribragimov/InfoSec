@@ -4,33 +4,36 @@ import java.util.ArrayList;
 
 public class FileProvider {
 
-    public byte[] readfileencode(String file) throws IOException {
-        FileInputStream fileInputStream = new FileInputStream(file);
-        byte[] array = fileInputStream.readAllBytes();
-        fileInputStream.close();
-        if (array.length%8!=0)
-            System.out.println("Error with file length\nSome data will lose");
-        return array;
-    }
-
-    public byte[] readfiledecode(String file) throws IOException {
+    public byte[] readfile(String file) throws IOException {
         FileInputStream fileInputStream = new FileInputStream(file);
         byte[] array = fileInputStream.readAllBytes();
         fileInputStream.close();
         return array;
     }
 
-    public void writefile(String file,ArrayList<Long> arrayList) throws IOException {
+    public void writefile(String file,ArrayList<Long> arrayList,Main main) throws IOException {
         FileOutputStream fileOutputStream = new FileOutputStream(file);
-        for (int i = 0 ; i < arrayList.size(); i++){
-            write(fileOutputStream,arrayList.get(i));
+        int k = main.getK();
+        for (int i = 0 ; i < arrayList.size() -1 ; i++){
+            writefull(fileOutputStream,arrayList.get(i));
         }
+        if (k!=0)
+            writenotfull(fileOutputStream,arrayList.get(arrayList.size()-1),k);
+        else
+            writefull(fileOutputStream,arrayList.get(arrayList.size()-1));
         fileOutputStream.close();
     }
 
-    public void write(FileOutputStream fileOutputStream,Long value) throws IOException {
-        byte[] bytes = ByteBuffer.allocate(Long.SIZE / Byte.SIZE).putLong(value).array();
+    public void writefull(FileOutputStream fileOutputStream,Long value) throws IOException {
+        byte[] bytes = ByteBuffer.allocate(Byte.SIZE).putLong(value).array();
         fileOutputStream.write(bytes);
+    }
+
+    public void writenotfull(FileOutputStream fileOutputStream,Long value,int k) throws IOException {
+        byte[] bytes = ByteBuffer.allocate(Byte.SIZE).putLong(value).array();
+        for (int i = 0 ; i < k ; i++){
+            fileOutputStream.write(bytes[i]);
+        }
     }
 
 
