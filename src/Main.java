@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
     String key;
@@ -33,14 +34,32 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Main main = new Main();
         main.setKey("1asdaas");
-        main.setFile("inf_seti.doc");
-        main.setNewfile("inf_seti_encrypted.doc");
+        System.out.println("Choose \n 1) Encode\n 2) Decode");
+        Scanner scanner = new Scanner(System.in);
+        int b = scanner.nextInt();
+        System.out.println("select file");
+        scanner = new Scanner(System.in);
+        String s = scanner.nextLine();
+        main.setFile(s);
+        System.out.println("select new file");
+        scanner = new Scanner(System.in);
+        s = scanner.nextLine();
+        main.setNewfile(s);
         KeyProvider keyProvider = new KeyProvider();
-        ArrayList<String> arrayListkey = keyProvider.keyprovide(main.getKey());
         FileProvider fileProvider = new FileProvider();
-        ArrayList arrayList = fileProvider.fileprovide(main.getFile());
-        GostChangeMethod gostChangeMethod = new GostChangeMethod();
-        gostChangeMethod.process(arrayList,arrayListkey,main);
+        int[] arrayListkey;
+        byte[] array;
+        if (b==1) {
+            arrayListkey = keyProvider.keyprovideencode(main.getKey());
+            array = fileProvider.readfileencode(main.getFile());
+        }
+        else {
+            arrayListkey = keyProvider.keyprovidedecode(main.getKey());
+            array = fileProvider.readfiledecode(main.getFile());
+        }
+            GostChangeMethod gostChangeMethod = new GostChangeMethod();
+            ArrayList<Long> arrayList = gostChangeMethod.process(array, arrayListkey);
+            fileProvider.writefile(main.getNewfile(), arrayList);
     }
 
 }
