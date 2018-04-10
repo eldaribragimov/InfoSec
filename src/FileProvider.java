@@ -9,7 +9,7 @@ public class FileProvider {
         byte[] array = fileInputStream.readAllBytes();
         fileInputStream.close();
         if (array.length%8!=0)
-            System.out.println("error with file\nSome data will lose");
+            System.out.println("Error with file length\nSome data will lose");
         return array;
     }
 

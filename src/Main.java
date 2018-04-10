@@ -34,14 +34,14 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Main main = new Main();
         main.setKey("1asdaas");
-        System.out.println("Choose \n 1) Encode\n 2) Decode");
+        System.out.println("Choose :\n1) Encode\n2) Decode\n");
         Scanner scanner = new Scanner(System.in);
         int b = scanner.nextInt();
-        System.out.println("select file");
+        System.out.println("\nSelect input file\n");
         scanner = new Scanner(System.in);
         String s = scanner.nextLine();
         main.setFile(s);
-        System.out.println("select new file");
+        System.out.println("\nSelect output file\n");
         scanner = new Scanner(System.in);
         s = scanner.nextLine();
         main.setNewfile(s);
@@ -49,6 +49,7 @@ public class Main {
         FileProvider fileProvider = new FileProvider();
         int[] arrayListkey;
         byte[] array;
+
         if (b==1) {
             arrayListkey = keyProvider.keyprovideencode(main.getKey());
             array = fileProvider.readfileencode(main.getFile());
@@ -60,6 +61,7 @@ public class Main {
             GostChangeMethod gostChangeMethod = new GostChangeMethod();
             ArrayList<Long> arrayList = gostChangeMethod.process(array, arrayListkey);
             fileProvider.writefile(main.getNewfile(), arrayList);
+        System.out.println("\nSuccess\n");
     }
 
 }
