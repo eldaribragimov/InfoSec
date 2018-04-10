@@ -54,6 +54,7 @@ public class Main {
             arrayListkey = keyProvider.keyprovideencode(main.getKey());
             array = fileProvider.readfileencode(main.getFile());
         }
+
         else {
             arrayListkey = keyProvider.keyprovidedecode(main.getKey());
             array = fileProvider.readfiledecode(main.getFile());
