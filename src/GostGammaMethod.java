@@ -16,9 +16,9 @@ public class GostGammaMethod {
     public long handlier(long value ){
         int n1 = (int) ( (value & (-4294967296L) ) >>> 32);   // выделение из блока 64 бит первого блока 32 бит
         int n2 = (int) ( value & 4294967295L );            // выделение из блока 64 бит второго блока 32 бит
-        n2 = (n2 + 16843009 );
-        if (n1 <= 4278124283L)
-            n1 = n1 + 16843012;
+        n2 = n2 + 16843009;    //  0x01010101
+        if (n1 <= -16843010)   // $fefefefe
+            n1 = n1 + 16843012;  // 0x01010104
         else
             n1 = n1 + 16843012 + 1;
         return ( Integer.toUnsignedLong(n1) << 32 ) | (( (long) n2 ) & 4294967295L ) ;
@@ -28,7 +28,7 @@ public class GostGammaMethod {
 
         ArrayList<Long> arrayList = new ArrayList<>();
         long b = 0;
-        int v =arrayListfromfile.length%8;
+        int v = arrayListfromfile.length % 8;
         main.setK(v);  // для того чтобы знать сколько недостающих байтов от 8 потом записывать
 
         // собираем блоки 64 бит из байтов

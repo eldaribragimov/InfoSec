@@ -42,7 +42,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         Main main = new Main();
-        System.out.println("Choose Mode :\n1) Simple Change Method ( for 64 bit only )\n2) Gamma mode\n");
+        System.out.println("\nChoose Mode :\n1) Simple Change Method ( for 64 bit only )\n2) Gamma mode\n");
         GostGammaMethod gostGammaMethod;
         KeyProvider keyProvider;
         GostChangeMethod gostChangeMethod;
@@ -56,16 +56,16 @@ public class Main {
             keyProvider = new KeyProvider();
             gostChangeMethod = new GostChangeMethod();
             fileProvider = new FileProvider();
-            System.out.println("Choose :\n1) Encode\n2) Decode\n");
+            System.out.println("\nChoose :\n1) Encode\n2) Decode\n");
             scanner = new Scanner(System.in);
             int c = scanner.nextInt();
-            System.out.println("Enter key");
+            System.out.println("\nWrite key\n");
             scanner = new Scanner(System.in);
             main.setKey(scanner.nextLine());
-            System.out.println("\nSelect input file\n");
+            System.out.println("\nWrite input file\n");
             scanner = new Scanner(System.in);
             main.setFile(scanner.nextLine());
-            System.out.println("\nSelect output file\n");
+            System.out.println("\nWrite output file\n");
             scanner = new Scanner(System.in);
             main.setNewfile(scanner.nextLine());
             if ( c == 1 ){
@@ -86,19 +86,19 @@ public class Main {
             keyProvider = new KeyProvider();
             gostGammaMethod = new GostGammaMethod();
             fileProvider = new FileProvider();
-            System.out.println("Choose :\n1) Encode\n2) Decode\n");
+            System.out.println("\nChoose :\n1) Encode\n2) Decode\n");
             scanner = new Scanner(System.in);
             int c = scanner.nextInt();
-            System.out.println("Enter key");
+            System.out.println("\nWrite key");
             scanner = new Scanner(System.in);
             main.setKey(scanner.nextLine());
-            System.out.println("Enter sync");
+            System.out.println("\nWrite sync");
             scanner = new Scanner(System.in);
             long sync = gostGammaMethod.provideparcel(scanner.nextLine());
-            System.out.println("\nSelect input file\n");
+            System.out.println("\nWrite input file\n");
             scanner = new Scanner(System.in);
             main.setFile(scanner.nextLine());
-            System.out.println("\nSelect output file\n");
+            System.out.println("\nWrite output file\n");
             scanner = new Scanner(System.in);
             main.setNewfile(scanner.nextLine());
             int [] arraykey = keyProvider.keyprovideencode(main.getKey());
