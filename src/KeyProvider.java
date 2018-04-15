@@ -1,21 +1,26 @@
-import org.apache.commons.codec.digest.DigestUtils;
-
-import java.math.BigInteger;
-import java.util.ArrayList;
 
 public class KeyProvider {
 
-    public int[] keyprovideencode(String key){
+    public int[] keyprovideencode(byte[] arraykey){
 
-        String sha256hex = DigestUtils.sha256Hex(key); // пропускаем ключ через хэш-функцию
+        // режим кодирования
+        // генерируем массив элементы которого по 32 бит
 
-        int k = 0;
         int[] array = new int[32];
+        int k = -1;
 
         for (int i = 0 ; i < 8 ; i++) {
-            array[i] = Integer.parseUnsignedInt(sha256hex.substring(k, k + 8), 16);
-            k += 8;
+            int b = 1;
+            for (int j = k+1 ; ((j < arraykey.length) && (b==1) ) ; j++){
+                array[i] = (array[i]+arraykey[j]);
+                if ((j+1)%4 !=0)
+                    array[i] = array[i] << 8;
+                else
+                    b=0;
+                k = j;
+            }
         }
+
         k = 0;
 
         for (int i = 8 ; i < array.length ; i++){
@@ -30,15 +35,30 @@ public class KeyProvider {
         return array;
     }
 
-    public int[] keyprovidedecode(String key){
 
-        String sha256hex = DigestUtils.sha256Hex(key);
-        int k = 0;
+    public int[] keyprovidedecode(byte[] arraykey){
+
+        // режим декодирования
+
+        // генерируем массив элементы которого по 32 бит
+
+
         int[] array = new int[32];
+
+        int k = -1;
+
         for (int i = 0 ; i < 8 ; i++) {
-            array[i] = Integer.parseUnsignedInt(sha256hex.substring(k, k + 8), 16);
-            k += 8;
+            int b = 1;
+            for (int j = k+1 ; ((j < arraykey.length) && (b==1) ) ; j++){
+                array[i] = (array[i]+arraykey[j]);
+                if ((j+1)%4 !=0)
+                    array[i] = array[i] << 8;
+                else
+                    b=0;
+                k = j;
+            }
         }
+
         k = 7;
 
         for (int i = 8 ; i < array.length ; i++){

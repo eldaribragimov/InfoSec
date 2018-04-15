@@ -4,7 +4,34 @@ public class GostChangeMethod {
 
 
 
-    public ArrayList<Long> process(byte[] arrayListfromfile, int[] arrayListkey) {
+    public byte[] encodeprocess(byte[] arrayListfromfile, byte[] arraykey) {
+
+        int[] arrayListkey = new KeyProvider().keyprovideencode(arraykey); // получаем массив из ключа
+
+        ArrayList<Long> arrayList = new ArrayList<>();
+        long b = 0;
+
+        // собираем блоки 64 бит из байтов и кладем их в массив
+
+        for (int i = 0 ; i < arrayListfromfile.length ; i++){
+            Long s = Byte.toUnsignedLong(arrayListfromfile[i]);
+            b = b | s;
+            if ( ( i + 1 ) % 8 == 0){
+                arrayList.add(b);
+                b = 0;
+            }
+            else
+                b = b << 8;
+        }
+        for (int i = 0 ; i < arrayList.size() ; i++){
+            arrayList.set(i,cryptfunction(arrayList.get(i),arrayListkey));  // выполняем операции над блоками 64 бит
+        }
+        return new DataProvider().handlier(arrayList);
+    }
+
+    public byte[] decodeprocess(byte[] arrayListfromfile, byte[] arraykey) {
+
+        int[] arrayListkey = new KeyProvider().keyprovidedecode(arraykey);
 
         ArrayList<Long> arrayList = new ArrayList<>();
         long b = 0;
@@ -22,13 +49,13 @@ public class GostChangeMethod {
                 b = b << 8;
         }
         for (int i = 0 ; i < arrayList.size() ; i++){
-            arrayList.set(i,function(arrayList.get(i),arrayListkey));  // выполняем операции над блоками 64 бит
+            arrayList.set(i,cryptfunction(arrayList.get(i),arrayListkey));  // выполняем операции над блоками 64 бит
         }
-        return arrayList;
+        return new DataProvider().handlier(arrayList);
     }
 
 
-    public long function(long value,int[] arrayListkey){
+    public long cryptfunction(long value,int[] arrayListkey){
 
         // таблица замен
 

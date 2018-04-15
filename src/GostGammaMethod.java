@@ -1,11 +1,10 @@
 import org.apache.commons.codec.digest.DigestUtils;
-
 import java.util.ArrayList;
 
 
 public class GostGammaMethod {
 
-    public long provideparcel(String key){
+   /* public long provideparcel(String key){
 
         // генерируем синхрпосылку
 
@@ -13,15 +12,16 @@ public class GostGammaMethod {
 
     }
 
-    public long handlier(long value ){
+    public long handlier(long value,int[] arrayListkey ){
         int n1 = (int) ( (value & (-4294967296L) ) >>> 32);   // выделение из блока 64 бит первого блока 32 бит
         int n2 = (int) ( value & 4294967295L );            // выделение из блока 64 бит второго блока 32 бит
         n2 = n2 + 16843009;    //  0x01010101
-        if (n1 <= -16843010)   // $fefefefe
-            n1 = n1 + 16843012;  // 0x01010104
-        else
-            n1 = n1 + 16843012 + 1;
-        return ( Integer.toUnsignedLong(n1) << 32 ) | (( (long) n2 ) & 4294967295L ) ;
+        n1 = n1 + 16843012;  // 0x01010104
+        if (n1 == -1) {
+            n1 = 0;
+        }
+        GostChangeMethod gostChangeMethod = new GostChangeMethod();
+        return gostChangeMethod.cryptfunction( (Integer.toUnsignedLong(n1) << 32 ) | (( (long) n2 ) & 4294967295L ),arrayListkey) ;
     }
 
     public ArrayList<Long> process(byte[] arrayListfromfile, int[] arrayListkey, long sync,Main main) {
@@ -57,13 +57,14 @@ public class GostGammaMethod {
             arrayList.add(b);
 
         for (int i = 0 ; i < arrayList.size() ; i++){
-            arrayList.set(i,arrayList.get(i) ^ function(handlier(sync),arrayListkey));
+            sync = handlier(sync,arrayListkey);
+            arrayList.set(i,arrayList.get(i) ^ function(sync,arrayListkey));
         }
         return arrayList;
     }
 
     public Long function(long value , int[] key){
-        return new GostChangeMethod().function(value,key);
-    }
+        return new GostChangeMethod().cryptfunction(value,key);
+    }*/
 
 }
