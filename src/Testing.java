@@ -2,7 +2,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class Testing {
-
+/*
     @Test
 
     // тестирование метода простой замены валидным ключом
@@ -91,7 +91,7 @@ public class Testing {
         }
 
         Assert.assertFalse(c);  // тест пройден если b = false
-    }
+    }*/
 
 }
 

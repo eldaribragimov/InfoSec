@@ -43,12 +43,12 @@ public class PFBMode {
                 b = b << 8;
         }
 
-        arrayList.set(0,new GostChangeMethod().cryptfunction(Vector_Long_value,arrayListkey) ^ arrayList.get(0));  // определяем C(1)
+        //arrayList.set(0,new GostChangeMethod().cryptfunction(Vector_Long_value,arrayListkey) ^ arrayList.get(0));  // определяем C(1)
 
         // выполняем для остальных C(i>1)
 
         for (int i = 1 ; i < arrayList.size() ; i++){
-             arrayList.set(i,new GostChangeMethod().cryptfunction(arrayList.get(i-1),arrayListkey) ^ arrayList.get(i));  // выполняем операции над блоками 64 бит
+             //arrayList.set(i,new GostChangeMethod().cryptfunction(arrayList.get(i-1),arrayListkey) ^ arrayList.get(i));  // выполняем операции над блоками 64 бит
         }
         return new DataProvider().handlier(arrayList);
     }

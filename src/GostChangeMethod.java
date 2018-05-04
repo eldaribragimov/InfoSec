@@ -1,3 +1,4 @@
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 public class GostChangeMethod {
@@ -8,7 +9,7 @@ public class GostChangeMethod {
 
         int[] arrayListkey = new KeyProvider().keyprovideencode(arraykey); // получаем массив из ключа
 
-        ArrayList<Long> arrayList = new ArrayList<>();
+        /*ArrayList<Long> arrayList = new ArrayList<>();
         long b = 0;
 
         // собираем блоки 64 бит из байтов и кладем их в массив
@@ -26,7 +27,23 @@ public class GostChangeMethod {
         for (int i = 0 ; i < arrayList.size() ; i++){
             arrayList.set(i,cryptfunction(arrayList.get(i),arrayListkey));  // выполняем операции над блоками 64 бит
         }
+        //return new DataProvider().handlier(arrayList);
+        return arrayList;*/
+
+        byte[] n1 = new byte[4];
+        byte[] n2 = new byte[4];
+
+        for (int i = 0 ; i < 4 ; i++){
+            n1[i] = arrayListfromfile[i];
+        }
+
+        for (int i = 4 ; i < arrayListfromfile.length ; i++){
+            n2[i-4] = arrayListfromfile[i];
+        }
+        ArrayList<Long> arrayList = new ArrayList<>();
+        arrayList.add(cryptfunction(n1,n2,arrayListkey));
         return new DataProvider().handlier(arrayList);
+
     }
 
     public byte[] decodeprocess(byte[] arrayListfromfile, byte[] arraykey) {
@@ -49,25 +66,26 @@ public class GostChangeMethod {
                 b = b << 8;
         }
         for (int i = 0 ; i < arrayList.size() ; i++){
-            arrayList.set(i,cryptfunction(arrayList.get(i),arrayListkey));  // выполняем операции над блоками 64 бит
+            //arrayList.set(i,cryptfunction(arrayList.get(i),arrayListkey));  // выполняем операции над блоками 64 бит
         }
         return new DataProvider().handlier(arrayList);
     }
 
 
-    public long cryptfunction(long value,int[] arrayListkey){
+    public long cryptfunction(byte[] n1_,byte[] n2_,int[] arrayListkey){
 
         // таблица замен
 
         int [][] b = new int[][] { {4, 10, 9, 2, 13, 8, 0, 14, 6, 11, 1, 12, 7, 15, 5, 3} , {14,11,4,12,6,13,15,10,2,3,8,1,0,7,5,9} , {5,8,1,13,10,3,4,2,14,15,12,7,6,0,9,11} , {7,13,10,1,0,8,9,15,14,4,6,12,11,2,5,3} , {6,12,7,1,5,15,13,8,4,10,9,14,0,3,11,2} , {4,11,10,0,7,2,1,13,3,6,8,5,9,12,15,14} , {13,11,4,1,3,15,5,9,0,10,14,7,6,8,2,12} , {1,15,13,0,5,7,10,4,9,2,3,14,6,11,8,12} };
 
-
         int n1 ;
         int n2 ;
         int [] a;
         int v;
-        n1 = (int) ( (value & (-4294967296L) ) >>> 32);   // выделение из блока 64 бит первого блока 32 бит
-        n2 = (int) ( value & 4294967295L );            // выделение из блока 64 бит второго блока 32 бит
+        n1 = ByteBuffer.wrap(n1_).getInt();
+        n2 = ByteBuffer.wrap(n2_).getInt();
+        //n1 = (int) ( (value & (-4294967296L) ) >>> 32);   // выделение из блока 64 бит первого блока 32 бит
+        //n2 = (int) ( value & 4294967295L );            // выделение из блока 64 бит второго блока 32 бит
 
             for (int c = 0 ; c < arrayListkey.length; c++) {
 
